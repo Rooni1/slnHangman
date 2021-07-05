@@ -1,5 +1,4 @@
 ﻿mangos
-animals
 world
 human
 computer
@@ -12,4 +11,9 @@ butik
 store
 strawberry
 elephant
+animal
+Sweden
+Paris
+
+
 

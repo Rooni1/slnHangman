@@ -1,0 +1,149 @@
+﻿static void GuessLetter()
+        {
+            (char[] UnrevealedArray, string RandomString) = Hidecharacters();
+            Console.WriteLine(RandomString);
+            StringBuilder StrBuilder = new StringBuilder();
+            char[] ToSaveRightGusse = new char[RandomString.Length];
+            Console.Write("Unrevealed word is:");
+            Console.Write(UnrevealedArray);
+            bool isAlive = true;
+            int count = 10;
+            int ToSaveLetterIndex = 0;
+            while (isAlive)
+            {
+                Console.WriteLine("\n" + "Guess a Letter");
+                string UserInput = Console.ReadLine().ToUpper();
+                bool CheckForLetters = IsAllLetters(UserInput);
+                if (CheckForLetters == false) // To check if user input is correct format. 
+                {
+                    Console.WriteLine("Entered letter is not in correct formate");
+                    Console.WriteLine("Try Again");
+                    Console.WriteLine("You still have" + " " + count + " " + "tries left");
+                }
+                if(CheckForLetters == true)
+                {
+                    // This if is to check if user write one letter or more.
+                    if (UserInput.Length == 1)
+                    {
+                        char Gusscharacter;
+                       
+                        // When first time program starts there is no letters to compare just insert them.
+                        if (count == 10)
+                        {
+                            Gusscharacter = char.Parse(UserInput);
+                            if (RandomString.Contains<char>(Gusscharacter))
+                            {
+                               
+                                for (int i = 0; i < RandomString.Length; i++)
+                                {
+                                    if (Gusscharacter == RandomString[i])
+                                    {
+                                        UnrevealedArray[i] = Gusscharacter;
+                                        
+                                    }
+                                }
+                                //ToSaveRightGusse[ToSaveLetterIndex] = Gusscharacter;
+                                Array.Fill(ToSaveRightGusse, Gusscharacter);
+                                ToSaveLetterIndex = ToSaveLetterIndex + 1;
+                            }
+                            else
+                            {
+                                StrBuilder.Append(Gusscharacter);
+
+                            }
+                            Console.Write("Unrevealed Word is" + "" + " :");
+                            Console.WriteLine(UnrevealedArray);
+                            Console.Write("Your Guess is:" + " ");
+                            Console.WriteLine(StrBuilder);
+                            count--;
+                            Console.WriteLine("You have" + " " + count + " " + "tries remaining");
+
+                        }
+                        else
+                        {
+                            Gusscharacter = char.Parse(UserInput);
+                            Boolean LetterExist = false;
+                            for (int y = 0; y < UnrevealedArray.Length; y++)  //when user already entered the letter.
+                            {
+                               
+                                if (Gusscharacter.Equals(UnrevealedArray[y]) || StrBuilder.ToString().Contains(Gusscharacter))
+                                {
+                                    int NumberOfCount = count;
+                                    count = NumberOfCount;
+                                    LetterExist = true;
+                                }
+
+                            }
+                            if (LetterExist == true)
+                            {
+                                Console.WriteLine("You have already entered this letter:" + " " + Gusscharacter);
+                                Console.WriteLine("You still have" + " " + count + " " + "tries remaining");
+                            }
+                            if (LetterExist == false)
+                            {
+                                
+                                if (RandomString.Contains<char>(Gusscharacter))
+                                {
+                                    for (int z = 0; z < RandomString.Length; z++)
+                                    {
+                                        if (Gusscharacter == RandomString[z])
+                                        {
+                                            UnrevealedArray[z] = Gusscharacter;
+                                        }
+                                        
+                                    }
+                                    ToSaveRightGusse[ToSaveLetterIndex] = Gusscharacter;
+                                    ToSaveLetterIndex = ToSaveLetterIndex +1;
+
+                                }
+                                else
+                                {
+                                    StrBuilder.Append(Gusscharacter);
+
+                                }
+                                count--;
+                                Console.WriteLine("You have" + " " + count + " " + "tries remaining");
+                            }
+                            if (count != 0)
+                            {
+                                Console.Write("Unrevealed Word is:" + "");
+                                Console.WriteLine(UnrevealedArray);
+                                Console.Write("Your Guess is:" + " ");
+                                Console.WriteLine(StrBuilder);
+                            }
+                        }
+
+                    }     // End of if User enter one letter
+                    else // User entered more than one letter
+                    {
+                        Console.WriteLine("You have enter more then one letter");
+                        Console.WriteLine("Try Again");
+                        Console.WriteLine("You have still" + " "+ count+" "+ "tries left");
+                    }
+
+                }
+              
+                // This if is when you have take 10 tries and can't gusse the right word.
+               
+                string RightGuess = new string(ToSaveRightGusse);
+                if (string.Equals(RandomString,RightGuess)) 
+                {
+                      
+                        Console.WriteLine("Congratulation you guess is right");
+                        Console.WriteLine("Unrevealed word is:" + " " + RandomString);
+                        Console.WriteLine("Your guessword is:" + " " + RightGuess);
+                        Console.WriteLine("You Won!");
+                        break;
+                }
+                if (count == 0 && RandomString != RightGuess)
+                {
+                    Console.WriteLine("You Lose the Game ");
+                    Console.Write("Unrevealed Word is:" + "");
+                    Console.WriteLine(RandomString);
+                    Console.Write("Your Guess word is:" + " ");
+                    Console.WriteLine(StrBuilder);
+                }
+
+            } // Ends While
+            
+        }
